@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sucursales Cercanas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f8ff; /* Color de fondo suave */
+    }
+    .navbar {
+      background-color: #007bff; /* Azul principal */
+    }
+    .navbar-brand, .nav-link {
+      color: #ffffff !important; /* Texto blanco en la navbar */
+    }
+    .hero-section {
+      background-color: #0056b3; /* Azul oscuro */
+      color: #ffffff; /* Texto blanco */
+      padding: 50px 0;
+    }
+    footer {
+      background-color: #e9ecef; /* Color de fondo del footer */
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">Tienda Online</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/pages/sucursales_cercanas.html">Sucursales Cercanas</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero-section text-center">
+    <h1 class="mb-4">Sucursales Cercanas</h1>
+    <p class="lead">Aquí están las sucursales más cercanas a nuestros clientes.</p>
+  </div>
+
+  <hr>
+  <!-- Sucursales Cercanas -->
+  <div class="container py-5" id="sucursales">
+    <h2 class="text-center mb-4">Lista de Sucursales Cercanas a Clientes</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="sucursales-list">
+      <!-- Las sucursales serán cargadas dinámicamente aquí -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-light py-3">
+    <div class="container text-center">
+      <p class="mb-0">© 2024 Tienda Online. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Obtener todas las sucursales cercanas a todos los clientes
+      fetch("http://127.0.0.1:5000/sucursales_cercanas")
+        .then(response => response.json())
+        .then(data => {
+          const sucursalesList = document.getElementById("sucursales-list");
+          sucursalesList.innerHTML = ""; // Limpiar la lista
+          data.forEach(cliente => {
+            cliente.sucursales.forEach(sucursal => {
+              const sucursalCard = `
+                <div class="col">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">${sucursal.nombre_sucursal}</h5>
+                      <p class="card-text"><strong>Cliente:</strong> ${cliente.nombre_cliente}</p>
+                      <p class="card-text"><strong>Distancia:</strong> ${sucursal.distancia_km.toFixed(2)} km</p>
+                    </div>
+                  </div>
+                </div>
+              `;
+              sucursalesList.innerHTML += sucursalCard;
+            });
+          });
+        })
+        .catch(error => console.error("Error al cargar sucursales cercanas:", error));
+    });
+  </script>
+</body>
+</html>
