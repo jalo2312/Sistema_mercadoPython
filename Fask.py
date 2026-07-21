@@ -183,7 +183,7 @@ def api_obtener_sucursales_cercanas():
 
     
 
-mongo_uri = "mongodb+srv://johanlinares2312:2312@entregafinal.ucptk.mongodb.net/?ssl=true&tlsAllowInvalidCertificates=true"
+mongo_uri = ""
 mongo_client = MongoClient(mongo_uri)
 mongo_db = mongo_client["entregaFinal"]
 
@@ -191,7 +191,7 @@ mongo_db = mongo_client["entregaFinal"]
 mysql_config = {
     "host": "localhost",
     "user": "root",
-    "password": "2312",
+    "password": "",
     "database": "entrega"
 }
 mysql_conn = mysql.connector.connect(**mysql_config)
