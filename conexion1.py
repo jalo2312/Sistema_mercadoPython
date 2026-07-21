@@ -6,7 +6,7 @@ import decimal
 mysql_conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="2312",
+    password="",
     database="entrega"
 )
 cursor = mysql_conn.cursor(dictionary=True)
